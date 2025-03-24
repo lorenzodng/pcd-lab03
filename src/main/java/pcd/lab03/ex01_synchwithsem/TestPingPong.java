@@ -1,5 +1,7 @@
 package pcd.lab03.ex01_synchwithsem;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Unsynchronized version
  * 
@@ -9,8 +11,15 @@ package pcd.lab03.ex01_synchwithsem;
  */
 public class TestPingPong {
 	public static void main(String[] args) {
-		new Pinger().start();
-		new Ponger().start();	
+
+		Semaphore pingSem = new Semaphore(0); //semaforo evento
+		Semaphore pongSem = new Semaphore(0); //semaforo evento
+
+		new Ponger(pingSem, pongSem).start();
+		new Pinger(pingSem, pongSem).start();
+
+		pongSem.release(); //signal. il semaforo assume valore 1 e l'esecuzione ha inizio con Pinger
+
 	}
 
 }

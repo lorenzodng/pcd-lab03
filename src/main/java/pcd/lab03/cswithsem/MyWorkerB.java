@@ -11,16 +11,18 @@ public class MyWorkerB extends Worker {
 		this.mutex = lock;
 	}
 
+	//in questo caso, la mutua esclusione è implementata attraverso l'utilizzo di un semaforo
+	//dal punto di vista funzionale, il comportamento è analogo al metodo synchronized e al lock esplicito, ma bloccano i thread che richiedono un mutex già occupato, permettendo di ottimizzare l'utilizzo delle risorse
 	public void run(){
 		while (true){
 		  try {
-			  mutex.acquire();
+			  mutex.acquire(); //wait
 			  action1();	
 			  action2();
 		  } catch (InterruptedException ex) {
 			  log("interrupted.");
 		  } finally {
-			  mutex.release();
+			  mutex.release(); //signal
 		  }
 		  action3();
 		}

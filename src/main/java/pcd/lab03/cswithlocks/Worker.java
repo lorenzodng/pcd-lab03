@@ -19,6 +19,7 @@ public abstract class Worker extends Thread {
 		}
 	}
 
+	//metodo per sospendere il thread per un tempo casuale che rientra nell'intervallo dei valori "min" e "max"
 	protected void wasteRandomTime(long min, long max){
 		try {
 			double value = rand.nextDouble();
@@ -26,12 +27,6 @@ public abstract class Worker extends Thread {
 			sleep((int)delay);
 		} catch (InterruptedException ex){
 			ex.printStackTrace();
-		}
-	}
-
-	protected void print(String msg){
-		synchronized (System.out){
-			System.out.print(msg);
 		}
 	}
 

@@ -11,15 +11,17 @@ public class MyWorkerB extends Worker {
 		this.lock = lock;
 	}
 
+	//in questo caso, la mutua esclusione è implementata attraverso l'utilizzo di un lock in modo "esplicito"
+	//dal punto di vista funzionale, il comportamento è analogo al metodo synchronized, ma possono offrire più flessibilità per implementare la mutua esclusione
 	public void run(){
 		while (true){
 		  try {
-			  lock.lockInterruptibly();
+			  lock.lockInterruptibly(); //acquisisco il lock
 			  b1();	
 			  b2();
 		  } catch (InterruptedException ex) {
 		  } finally {
-			  lock.unlock();
+			  lock.unlock(); //rilascio il lock
 		  }
 		  b3();
 		}
